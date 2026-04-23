@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sci. Not.</title>
+    <style>
+        div { 
+            border: 5px inset grey;
+            margin: 5px;
+            padding: 5px;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+
+Round answers to three significant figures.
+
+<div id="largeNums">
+    Large numbers (1≥|±x|) <br>
+    <input type="button" id="genLargeNum" value="Generate Large Number">
+    <span id="largeNum"></span><br>
+    <input type="button" id="getLargeNumAns" value="Get Answer">
+    <span id="largeNumAns"></span>
+
+</div>
+
+<div id="smallNums">
+    Small numbers (-1 < x < 1) <br>
+    <input type="button" id="genSmallNum" value="Generate Small Number">
+    <span id="smallNum"></span><br>
+    <input type="button" id="getSmallNumAns" value="Get Answer">
+    <span id="smallNumAns"></span>
+
+</div>
+
+
+    
+</body>
+
+<script>
+
+    largeNum = 0;
+    smallNum = 0;
+
+    document.getElementById("genLargeNum").addEventListener("click", function(){
+        let qSpace = document.getElementById("largeNum");
+        let aSpace = document.getElementById("largeNumAns")
+        
+        largeNum = Math.floor(generateLargeNumber(expMax=5));
+        console.log(largeNum);
+
+        qSpace.innerHTML = largeNum.toFixed(0);
+
+
+    })
+
+    document.getElementById("getLargeNumAns").addEventListener('click', function(){
+        let qSpace = document.getElementById("largeNum");
+        let aSpace = document.getElementById("largeNumAns")
+
+        console.log("largeNum", largeNum)
+
+        let numStr = largeNum.toExponential();
+        let coeff = Number(numStr.split("e")[0]);
+        let exponent = Number(numStr.split("e")[1].replace("+",""));
+
+        let outStr = `${coeff.toFixed(2)} × 10 <sup>${exponent}</sup>`;
+
+        console.log(outStr)
+        
+        aSpace.innerHTML = outStr;
+    })
+
+    document.getElementById("genSmallNum").addEventListener("click", function(){
+        let qSpace = document.getElementById("smallNum");
+        let aSpace = document.getElementById("smallNumAns")
+        
+        smallNum = generateSmallNumber(expMax=5);
+        console.log("smallNum", smallNum);
+
+        qSpace.innerHTML = smallNum;
+
+    })
+
+    document.getElementById("getSmallNumAns").addEventListener('click', function(){
+        let qSpace = document.getElementById("smallNum");
+        let aSpace = document.getElementById("smallNumAns")
+
+        console.log("smallNum", largeNum)
+
+        let numStr = smallNum.toExponential();
+        let coeff = Number(numStr.split("e")[0]);
+        let exponent = Number(numStr.split("e")[1].replace("+",""));
+
+        let outStr = `${coeff.toFixed(2)} × 10 <sup>${exponent}</sup>`;
+
+        console.log(outStr)
+        
+        aSpace.innerHTML = outStr;
+    })
+
+
+    function generateLargeNumber(expMax=10){
+        let coeff = Math.random()*10;
+        let exponent = Math.floor(Math.random()*expMax)+2;
+
+        let nSigFig = 3;
+
+        console.log(`${coeff} × 10^${exponent}`);
+
+        //qSpace.innerHTML = 
+        //qSpace.innerHTML=`${coeff.toFixed()} × 10 <sup>${exponent}</sup>`;
+        return coeff*10**exponent;
+
+    }
+
+    function generateSmallNumber(expMax=10){
+        let coeff = Math.random();
+        let exponent = Math.floor(Math.random()*expMax);
+
+        let nSigFig = 3;
+
+        console.log(`${coeff} × 10^${exponent}`);
+
+        //qSpace.innerHTML = 
+        //qSpace.innerHTML=`${coeff.toFixed()} × 10 <sup>${exponent}</sup>`;
+        return coeff*10**-exponent;
+
+    }
+
+
+
+
+</script>
+</html>

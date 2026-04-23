@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factoring Square Polynomials</title>
+
+    <style>
+        div { 
+            border: 5px inset grey;
+            margin: 5px;
+            padding: 5px;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+
+    Factoring Polynomial Squares
+
+    <div id="squaring">
+        Expand the binomial square:<br>
+        <input type="button" id="genSquare" value="Generate Square">
+        <span id="polySquare"></span><br>
+
+        <input type="button" id="squareAns" value="Show Expanded Answer">
+        <span id="polySquareAns"></span><br>
+    </div>
+
+    <div id="factoring">
+        Factor the polynomial: <br>
+        <input type="button" id="genExpandedSquare" value="Generate Expanded Square">
+        <span id="expandedSquare"></span><br>
+
+        <input type="button" id="expandedSquareAns" value="Show Factored Answer">
+        <span id="factorSquareAns"></span><br>
+    </div>
+
+    
+</body>
+
+<script>
+
+    // maxPolyNum = 10;
+
+    // polySquareNum = 0;
+
+    
+    class polySquare {
+        constructor(num=0){
+            this.maxPolyNum = 12;
+            this.polySquareNum =  num === 0? this.generateNum(): num;
+            
+        }
+
+        generateNum(){
+            this.polySquareNum = 0;
+            while (this.polySquareNum === 0){
+                let r = (Math.random()-0.5)*this.maxPolyNum*2;
+                console.log("r", r)
+                this.polySquareNum= Math.floor(r)
+            }
+            return this.polySquareNum;
+        }
+
+        factorHTML() {
+            let sign = this.polySquareNum > 0? "+" : "-";
+            return `(x ${sign} ${Math.abs(this.polySquareNum)})<sup>2</sup>`;
+        }
+
+        expandHTML() {
+            let t2 = this.polySquareNum * 2;
+            let t3 = this.polySquareNum**2;
+
+            let sign2 = t2 > 0? "+":"-";
+
+            return `x<sup>2</sup> ${sign2} ${Math.abs(t2)}x + ${t3}`;
+        }
+    }
+
+    poly = new polySquare();
+
+
+    document.getElementById("genSquare").addEventListener("click", function(){
+
+        poly = new polySquare();
+        document.getElementById("polySquare").innerHTML = poly.factorHTML();
+        document.getElementById("polySquareAns").innerHTML = "";
+        
+    })
+
+    document.getElementById("squareAns").addEventListener("click", function(){
+
+        document.getElementById("polySquareAns").innerHTML = poly.expandHTML();
+    }) 
+
+    document.getElementById("genExpandedSquare").addEventListener("click", function(){
+        poly = new polySquare();
+        document.getElementById("expandedSquare").innerHTML = poly.expandHTML();
+        document.getElementById("factorSquareAns").innerHTML = "";
+    })
+
+    document.getElementById("expandedSquareAns").addEventListener("click", function(){
+    document.getElementById("factorSquareAns").innerHTML = poly.factorHTML();
+    })
+</script>
+</html>
