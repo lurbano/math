@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factoring Square Polynomials</title>
+
+    <style>
+        div { 
+            border: 5px inset grey;
+            margin: 5px;
+            padding: 5px;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+
+    Factoring and Expanding Pairs of Binomials
+
+    <div id="expanding">
+        Expand the binomial:<br>
+        <input type="button" id="genBiPair" value="Generate Binomial Pair">
+        <span id="factorsQuestion"></span><br>
+
+        <input type="button" id="getExpandedAns" value="Show Expanded Answer">
+        <span id="expandedAns"></span><br>
+    </div>
+
+    <div id="factoring">
+        Factor the polynomial: <br>
+        <input type="button" id="genPoly" value="Generate Polynomial">
+        <span id="polynomial"></span><br>
+
+        <input type="button" id="factoredBinomialsBut" value="Show Factored Answer">
+        <span id="factoredBinomials"></span><br>
+    </div>
+
+    
+</body>
+
+<script>
+
+    
+    class binomialPair {
+        constructor(a=1, b=1){
+            // (x+a)(x+b)
+            this.a = a;
+            this.b = b;
+        }
+
+        generate(a_range=10, b_range=10){
+            this.a = Math.floor(Math.random()*a_range*2 - a_range);
+            this.b = Math.floor(Math.random()*b_range*2 - a_range);
+
+        }
+
+        expandHTML() {
+            let c2 = this.a + this.b;
+            let c3 = this.a * this.b;
+
+            let t2 = this.getSign(c2) + ' ';
+            let t3 = this.getSign(c3) + ' ';
+
+            if (c2 === 0) {
+                t2 = "";
+            } else if (Math.abs(c2) === 1) {
+                t2 += "x";
+            } else {
+                t2 += `${Math.abs(c2)}x`;
+            }
+
+            if (c3 === 0){
+                t3 = "";
+            } else {
+                t3 += Math.abs(c3);
+            }
+
+            //let str = `x<sup>2</sup> ${this.getSign(c2)} ${Math.abs(c2)}x ${this.getSign(c3)} ${Math.abs(c3)}`;
+            let str = `x<sup>2</sup> ${t2} ${t3}`;
+            console.log(str);
+            return str;
+        }
+
+        factorsHTML(){
+            let sign_a = this.a < 0? "-":"+";
+            let sign_b = this.b < 0? "-":"+";
+
+            let str = `(x ${sign_a} ${Math.abs(this.a)}) (x ${sign_b} ${Math.abs(this.b)})`;
+
+            console.log(str);
+            return str
+        }
+
+        getSign(val){
+            return val < 0? "-": "+";
+        }
+    }
+
+    biPair = new binomialPair();
+
+
+    document.getElementById("genBiPair").addEventListener("click", function(){
+
+        let qSpace = document.getElementById("factorsQuestion");
+        let aSpace = document.getElementById("expandedAns");
+        console.log("generating...")
+
+        biPair.generate()
+        aSpace.innerHTML = "";
+        qSpace.innerHTML = biPair.factorsHTML();
+        
+    })
+
+    document.getElementById("getExpandedAns").addEventListener("click", function(){
+
+        let aSpace = document.getElementById("expandedAns");
+
+        aSpace.innerHTML = biPair.expandHTML()
+    }) 
+
+
+    document.getElementById("genPoly").addEventListener("click", function(){
+        let qSpace = document.getElementById("polynomial")
+        let aSpace = document.getElementById("factoredBinomials")
+
+        aSpace.innerHTML ='';
+
+        biPair.generate();
+        qSpace.innerHTML = biPair.expandHTML();
+
+    })
+
+    document.getElementById("factoredBinomialsBut").addEventListener("click", function(){
+
+        let qSpace = document.getElementById("polynomial")
+        let aSpace = document.getElementById("factoredBinomials")
+
+        aSpace.innerHTML = biPair.factorsHTML();
+
+    })
+
+    
+</script>
+</html>
